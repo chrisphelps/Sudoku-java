@@ -1,0 +1,66 @@
+package org.sutemi.sudoku;
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+import java.util.List;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: chris
+ * Date: 6/6/13
+ * Time: 10:18 PM
+ * To change this template use File | Settings | File Templates.
+ */
+public class SudokuGridTest {
+    @Test
+    public void testGetRowPoints() throws Exception {
+        SudokuGrid grid = new SudokuGrid();
+        List<CellPoint> rowPoints = grid.getRowPoints(new CellPoint(3, 4));
+
+        assertNotNull(rowPoints);
+        assertEquals(8,rowPoints.size());
+        assertTrue(rowPoints.contains(new CellPoint(3,0)));
+        assertTrue(rowPoints.contains(new CellPoint(3,1)));
+        assertTrue(rowPoints.contains(new CellPoint(3,2)));
+        assertTrue(rowPoints.contains(new CellPoint(3,3)));
+        assertTrue(rowPoints.contains(new CellPoint(3,5)));
+        assertTrue(rowPoints.contains(new CellPoint(3,6)));
+        assertTrue(rowPoints.contains(new CellPoint(3,7)));
+        assertTrue(rowPoints.contains(new CellPoint(3,8)));
+    }
+
+    @Test
+    public void testGetColPoints() throws Exception {
+        SudokuGrid grid = new SudokuGrid();
+        List<CellPoint> colPoints = grid.getColPoints(new CellPoint(3, 4));
+
+        assertNotNull(colPoints);
+        assertEquals(8, colPoints.size());
+        assertTrue(colPoints.contains(new CellPoint(0,4)));
+        assertTrue(colPoints.contains(new CellPoint(1,4)));
+        assertTrue(colPoints.contains(new CellPoint(2,4)));
+        assertTrue(colPoints.contains(new CellPoint(4,4)));
+        assertTrue(colPoints.contains(new CellPoint(5,4)));
+        assertTrue(colPoints.contains(new CellPoint(6,4)));
+        assertTrue(colPoints.contains(new CellPoint(7,4)));
+        assertTrue(colPoints.contains(new CellPoint(8,4)));
+    }
+
+    @Test
+    public void testGetPeerPoints() throws Exception {
+        SudokuGrid grid = new SudokuGrid();
+        List<CellPoint> peerPoints = grid.getPeerPoints(new CellPoint(3, 4));
+
+        assertNotNull(peerPoints);
+        assertEquals(8, peerPoints.size());
+        assertTrue(peerPoints.contains(new CellPoint(3,3)));
+        assertTrue(peerPoints.contains(new CellPoint(3, 5)));
+        assertTrue(peerPoints.contains(new CellPoint(4,3)));
+        assertTrue(peerPoints.contains(new CellPoint(4, 4)));
+        assertTrue(peerPoints.contains(new CellPoint(4,5)));
+        assertTrue(peerPoints.contains(new CellPoint(5, 3)));
+        assertTrue(peerPoints.contains(new CellPoint(5,4)));
+        assertTrue(peerPoints.contains(new CellPoint(5, 5)));
+    }
+}
