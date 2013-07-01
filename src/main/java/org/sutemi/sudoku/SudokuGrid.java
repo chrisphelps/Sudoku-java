@@ -18,7 +18,7 @@ public class SudokuGrid {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 grid[i][j] = new ArrayList<Integer>();
-                for (int k = 0; k < 9; k++) {
+                for (int k = 1; k < 10; k++) {
                     grid[i][j].add(k);
                 }
             }
@@ -63,5 +63,10 @@ public class SudokuGrid {
             }
         }
         return peerPoints;
+    }
+
+    public List<Integer> getPossibilities(CellPoint cellPoint) {
+        return grid[cellPoint.getRow()][cellPoint.getCol()];
+
     }
 }

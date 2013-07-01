@@ -63,4 +63,22 @@ public class SudokuGridTest {
         assertTrue(peerPoints.contains(new CellPoint(5,4)));
         assertTrue(peerPoints.contains(new CellPoint(5, 5)));
     }
+
+    @Test
+    public void testRemovePossibility() {
+        SudokuGrid grid = new SudokuGrid();
+        List<Integer> possibilities = grid.getPossibilities(new CellPoint(3, 4));
+        for (int i = 1; i < 10; i++) {
+            assertTrue(possibilities.contains(5));
+        }
+        grid.eliminatePossibility(new CellPoint(3,4),5);
+        List<Integer> newpossibilities = grid.getPossibilities(new CellPoint(3, 4));
+        assertFalse(newpossibilities.contains(5));
+        for (int i = 1; i < 10; i++) {
+            if (i != 5) {
+                assertTrue(newpossibilities.contains(i));
+            }
+        }
+
+    }
 }
