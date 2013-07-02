@@ -69,4 +69,21 @@ public class SudokuGrid {
         return grid[cellPoint.getRow()][cellPoint.getCol()];
 
     }
+
+    public void placeGiven(CellPoint cellPoint, int i) {
+        //To change body of created methods use File | Settings | File Templates.
+        List<Integer> cell = grid[cellPoint.getRow()][cellPoint.getCol()];
+        cell.clear();
+        cell.add(i);
+        for (CellPoint point : getRowPoints(cellPoint)) {
+            eliminatePossibility(point,i);
+        }
+        for (CellPoint point : getColPoints(cellPoint)) {
+            eliminatePossibility(point,i);
+        }
+        for (CellPoint point : getPeerPoints(cellPoint)) {
+            eliminatePossibility(point,i);
+        }
+
+    }
 }
