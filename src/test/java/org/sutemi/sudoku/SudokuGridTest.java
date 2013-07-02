@@ -100,4 +100,33 @@ public class SudokuGridTest {
         }
 
     }
+
+    @Test
+    public void placeConjecture() {
+        SudokuGrid grid = new SudokuGrid();
+        SudokuGrid newgrid = grid.placeConjecture(new CellPoint(3,4), 5);
+        List<Integer> possibilities = newgrid.getPossibilities(new CellPoint(3,4));
+        assertEquals(1,possibilities.size());
+        possibilities = grid.getPossibilities(new CellPoint(3,4));
+        assertEquals(9,possibilities.size());
+        for (int i = 0; i < 9; i++) {
+            possibilities = newgrid.getPossibilities(new CellPoint(i,4));
+            if (i != 3) {
+                assertEquals(8, possibilities.size());
+            }
+            possibilities = newgrid.getPossibilities(new CellPoint(3,i));
+            if (i != 4) {
+                assertEquals(8, possibilities.size());
+            }
+            possibilities = grid.getPossibilities(new CellPoint(i,4));
+            if (i != 3) {
+                assertEquals(9, possibilities.size());
+            }
+            possibilities = grid.getPossibilities(new CellPoint(3,i));
+            if (i != 4) {
+                assertEquals(9, possibilities.size());
+            }
+        }
+
+    }
 }

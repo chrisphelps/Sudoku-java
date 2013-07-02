@@ -25,6 +25,20 @@ public class SudokuGrid {
         }
     }
 
+    public SudokuGrid(SudokuGrid that) {
+        grid = new List[9][9];
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                grid[i][j] = new ArrayList<Integer>();
+                for (int k = 1; k < 10; k++) {
+                    if (that.grid[i][j].contains(k)) {
+                        grid[i][j].add(k);
+                    }
+                }
+            }
+        }
+    }
+
     public void eliminatePossibility(CellPoint point, Integer possibility) {
         grid[point.row][point.col].remove(possibility);
     }
@@ -72,6 +86,11 @@ public class SudokuGrid {
 
     public void placeGiven(CellPoint cellPoint, int i) {
         //To change body of created methods use File | Settings | File Templates.
+        place(cellPoint, i);
+
+    }
+
+    private void place(CellPoint cellPoint, int i) {
         List<Integer> cell = grid[cellPoint.getRow()][cellPoint.getCol()];
         cell.clear();
         cell.add(i);
@@ -84,6 +103,12 @@ public class SudokuGrid {
         for (CellPoint point : getPeerPoints(cellPoint)) {
             eliminatePossibility(point,i);
         }
-
     }
+
+    public SudokuGrid placeConjecture(CellPoint cellPoint, int i) {
+        SudokuGrid newGrid = new SudokuGrid(this);
+        newGrid.place(cellPoint, i);
+        return newGrid;
+    }
+
 }
