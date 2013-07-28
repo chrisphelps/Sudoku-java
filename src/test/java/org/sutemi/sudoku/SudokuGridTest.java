@@ -83,7 +83,7 @@ public class SudokuGridTest {
     }
 
     @Test
-    public void placeGiven() {
+    public void testplaceGiven() {
         SudokuGrid grid = new SudokuGrid();
         grid.placeGiven(new CellPoint(3,4), 5);
         List<Integer> possibilities = grid.getPossibilities(new CellPoint(3,4));
@@ -102,7 +102,7 @@ public class SudokuGridTest {
     }
 
     @Test
-    public void placeConjecture() {
+    public void testplaceConjecture() {
         SudokuGrid grid = new SudokuGrid();
         SudokuGrid newgrid = grid.placeConjecture(new CellPoint(3,4), 5);
         List<Integer> possibilities = newgrid.getPossibilities(new CellPoint(3,4));
@@ -127,6 +127,15 @@ public class SudokuGridTest {
                 assertEquals(9, possibilities.size());
             }
         }
-
     }
+
+    // Other tests and next steps
+    // Place conjecture or given return null or exception when cannot be placed
+    // Eliminate possibility places when the alternatives are removed
+    // Data structure still pretty ugly
+    // Method to test whether position is a solution
+    // What does the external identification of possibilities look like
+    // Wrap head around general search implementation
+    // Expose Row and Column and Peers as types (List of CellPoints?)
+    // Hamcrest Matcher for tests
 }

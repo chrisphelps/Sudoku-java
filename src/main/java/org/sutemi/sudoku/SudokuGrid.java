@@ -39,10 +39,6 @@ public class SudokuGrid {
         }
     }
 
-    public void eliminatePossibility(CellPoint point, Integer possibility) {
-        grid[point.row][point.col].remove(possibility);
-    }
-
     public List<CellPoint> getRowPoints(CellPoint point) {
         List<CellPoint> rowPoints = new ArrayList<CellPoint>();
         for (int i = 0; i < 9; i++) {
@@ -85,13 +81,28 @@ public class SudokuGrid {
     }
 
     public void placeGiven(CellPoint cellPoint, int i) {
-        //To change body of created methods use File | Settings | File Templates.
         place(cellPoint, i);
-
     }
 
-    private void place(CellPoint cellPoint, int i) {
+    public SudokuGrid eliminatePossibility(CellPoint point, Integer possibility) {
+        List<Integer> cell = grid[point.row][point.col];
+        if (cell.contains(possibility)) {
+            grid[point.row][point.col].remove(possibility);
+            if (cell.size() == 1) {
+                return place(point,possibility);
+            } else {
+                return this;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    private SudokuGrid place(CellPoint cellPoint, int i) {
         List<Integer> cell = grid[cellPoint.getRow()][cellPoint.getCol()];
+        if (!cell.contains(i)) {
+            return null;
+        }
         cell.clear();
         cell.add(i);
         for (CellPoint point : getRowPoints(cellPoint)) {
@@ -103,6 +114,7 @@ public class SudokuGrid {
         for (CellPoint point : getPeerPoints(cellPoint)) {
             eliminatePossibility(point,i);
         }
+        return this;
     }
 
     public SudokuGrid placeConjecture(CellPoint cellPoint, int i) {
