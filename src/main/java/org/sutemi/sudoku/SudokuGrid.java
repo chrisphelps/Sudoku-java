@@ -76,7 +76,8 @@ public class SudokuGrid {
     }
 
     public List<Integer> getPossibilities(CellPoint cellPoint) {
-        return grid[cellPoint.getRow()][cellPoint.getCol()];
+        return new ArrayList<Integer>(grid[cellPoint.getRow()][cellPoint.getCol()]);
+
 
     }
 
