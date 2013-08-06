@@ -42,4 +42,28 @@ class SudokuGridSpecification extends Specification {
         }
     }
 
+    def "all possibilities"(int row, int col) {
+        expect:
+        [1,2,3,4,5,6,7,8,9].every() { grid.getPossibilities(new CellPoint(row,col)).contains(it) }
+
+        where:
+        row << [0,1,2,3,4,5,6,7,8]
+        col << [0,1,2,3,4,5,6,7,8]
+    }
+
+    def "remove possibility without propagation"() {
+        given:
+        def point = new CellPoint(3,4)
+
+        when:
+        def oldPossibilities = grid.getPossibilities(point)
+        grid.eliminatePossibility(point,5)
+        def newPossibilities = grid.getPossibilities(point)
+
+        then:
+        oldPossibilities.contains(5)
+        !newPossibilities.contains(5)
+        [1,2,3,4,6,7,8,9].every() { newPossibilities.contains(it) }
+    }
+
 }
