@@ -76,4 +76,18 @@ class SudokuGridSpecification extends Specification {
         [0,1,2,3,5,6,7,8].every() { grid.getPossibilities(new CellPoint(3,it)).size() == 8 }
     }
 
+    def "place conjecture"() {
+        when:
+        def newgrid = grid.placeConjecture(new CellPoint(3,4),5)
+
+        then:
+        // original grid unchanged
+        [0,1,2,3,4,5,6,7,8].every() { grid.getPossibilities(new CellPoint(it,4)).size() == 9 }
+        [0,1,2,3,4,5,6,7,8].every() { grid.getPossibilities(new CellPoint(3,it)).size() == 9 }
+        // newgrid is updated
+        newgrid.getPossibilities(new CellPoint(3,4)).size() == 1
+        [0,1,2,4,5,6,7,8].every() { newgrid.getPossibilities(new CellPoint(it,4)).size() == 8 }
+        [0,1,2,3,5,6,7,8].every() { newgrid.getPossibilities(new CellPoint(3,it)).size() == 8 }
+    }
+
 }
