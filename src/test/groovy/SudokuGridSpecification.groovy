@@ -19,14 +19,7 @@ class SudokuGridSpecification extends Specification {
 
         expect:
         rowPoints.size() == 8
-        rowPoints.contains(new CellPoint(3,0))
-        rowPoints.contains(new CellPoint(3,1))
-        rowPoints.contains(new CellPoint(3,2))
-        rowPoints.contains(new CellPoint(3,3))
-        rowPoints.contains(new CellPoint(3,5))
-        rowPoints.contains(new CellPoint(3,6))
-        rowPoints.contains(new CellPoint(3,7))
-        rowPoints.contains(new CellPoint(3,8))
+        [0,1,2,3,5,6,7,8].every(){ rowPoints.contains(new CellPoint(3,it)) }
     }
 
     def "colPoints"() {
@@ -35,14 +28,7 @@ class SudokuGridSpecification extends Specification {
 
         expect:
         colPoints.size() == 8
-        colPoints.contains(new CellPoint(0,4))
-        colPoints.contains(new CellPoint(1,4))
-        colPoints.contains(new CellPoint(2,4))
-        colPoints.contains(new CellPoint(4,4))
-        colPoints.contains(new CellPoint(5,4))
-        colPoints.contains(new CellPoint(6,4))
-        colPoints.contains(new CellPoint(7,4))
-        colPoints.contains(new CellPoint(8,4))
+        [0,1,2,4,5,6,7,8].every(){ colPoints.contains(new CellPoint(it,4)) }
     }
 
     def "peerPoints"() {
@@ -51,14 +37,9 @@ class SudokuGridSpecification extends Specification {
 
         expect:
         peerPoints.size() == 8
-        peerPoints.contains(new CellPoint(3,3))
-        peerPoints.contains(new CellPoint(3,5))
-        peerPoints.contains(new CellPoint(4,3))
-        peerPoints.contains(new CellPoint(4,4))
-        peerPoints.contains(new CellPoint(4,5))
-        peerPoints.contains(new CellPoint(5,3))
-        peerPoints.contains(new CellPoint(5,4))
-        peerPoints.contains(new CellPoint(5,5))
+        [[3,3],[3,5],[4,3],[4,4],[4,5],[5,3],[5,4],[5,5]].every() {
+            peerPoints.contains(new CellPoint(it[0],it[1]))
+        }
     }
 
 }
