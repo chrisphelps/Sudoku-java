@@ -100,7 +100,7 @@ public class SudokuGrid {
                 return this;
             }
         } else {
-            return null;
+            return this; // is it okay to eliminate a possibility multiple times?
         }
     }
 

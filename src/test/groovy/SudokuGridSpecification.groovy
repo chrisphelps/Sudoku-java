@@ -112,4 +112,12 @@ class SudokuGridSpecification extends Specification {
         [0,1,2,3,5,6,7,8].every() { newgrid.getPossibilities(new CellPoint(3,it)).size() == 8 }
     }
 
+    def "place conjecture fails when conjecture is not possible"() {
+        given:
+        def newgrid = grid.placeConjecture(new CellPoint(3,4),5)
+
+        expect:
+        newgrid.placeConjecture(new CellPoint(5,4),5) == null
+    }
+
 }
