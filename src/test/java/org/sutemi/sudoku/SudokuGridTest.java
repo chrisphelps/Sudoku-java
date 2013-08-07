@@ -71,8 +71,8 @@ public class SudokuGridTest {
         for (int i = 1; i < 10; i++) {
             assertTrue(possibilities.contains(5));
         }
-        grid.eliminatePossibility(new CellPoint(3,4),5);
-        List<Integer> newpossibilities = grid.getPossibilities(new CellPoint(3, 4));
+        SudokuGrid newgrid = grid.eliminatePossibility(new CellPoint(3,4),5);
+        List<Integer> newpossibilities = newgrid.getPossibilities(new CellPoint(3, 4));
         assertFalse(newpossibilities.contains(5));
         for (int i = 1; i < 10; i++) {
             if (i != 5) {
