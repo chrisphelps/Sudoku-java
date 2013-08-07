@@ -56,14 +56,14 @@ class SudokuGridSpecification extends Specification {
         def point = new CellPoint(3,4)
 
         when:
-        def oldPossibilities = grid.getPossibilities(point)
-        grid.eliminatePossibility(point,5)
-        def newPossibilities = grid.getPossibilities(point)
+        def newgrid = grid.eliminatePossibility(point,5)
 
         then:
-        oldPossibilities.contains(5)
-        !newPossibilities.contains(5)
-        [1,2,3,4,6,7,8,9].every() { newPossibilities.contains(it) }
+        // original grid unchanged
+        grid.getPossibilities(point).contains(5)
+        // newgrid is updated
+        !newgrid.getPossibilities(point).contains(5)
+        [1,2,3,4,6,7,8,9].every() { newgrid.getPossibilities(point).contains(it) }
     }
 
     def "place given"() {

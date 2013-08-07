@@ -86,11 +86,16 @@ public class SudokuGrid {
     }
 
     public SudokuGrid eliminatePossibility(CellPoint point, Integer possibility) {
+        SudokuGrid newGrid = new SudokuGrid(this);
+        return newGrid.eliminate(point,possibility);
+    }
+
+    private SudokuGrid eliminate(CellPoint point, int i) {
         List<Integer> cell = grid[point.row][point.col];
-        if (cell.contains(possibility)) {
-            grid[point.row][point.col].remove(possibility);
+        if (cell.contains(i)) {
+            cell.remove((Integer)i); //cast so that we call remove(object) not remove(index)
             if (cell.size() == 1) {
-                return place(point,possibility);
+                return place(point,i);
             } else {
                 return this;
             }
@@ -107,21 +112,20 @@ public class SudokuGrid {
         cell.clear();
         cell.add(i);
         for (CellPoint point : getRowPoints(cellPoint)) {
-            eliminatePossibility(point,i);
+            eliminate(point,i);
         }
         for (CellPoint point : getColPoints(cellPoint)) {
-            eliminatePossibility(point,i);
+            eliminate(point,i);
         }
         for (CellPoint point : getPeerPoints(cellPoint)) {
-            eliminatePossibility(point,i);
+            eliminate(point,i);
         }
         return this;
     }
 
     public SudokuGrid placeConjecture(CellPoint cellPoint, int i) {
         SudokuGrid newGrid = new SudokuGrid(this);
-        newGrid.place(cellPoint, i);
-        return newGrid;
+        return newGrid.place(cellPoint, i);
     }
 
 }
