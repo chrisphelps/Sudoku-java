@@ -39,6 +39,17 @@ public class SudokuGrid {
         }
     }
 
+    public boolean isSolution() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (grid[i][j].size() != 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public List<CellPoint> getRowPoints(CellPoint point) {
         List<CellPoint> rowPoints = new ArrayList<CellPoint>();
         for (int i = 0; i < 9; i++) {
@@ -77,8 +88,6 @@ public class SudokuGrid {
 
     public List<Integer> getPossibilities(CellPoint cellPoint) {
         return new ArrayList<Integer>(grid[cellPoint.getRow()][cellPoint.getCol()]);
-
-
     }
 
     public void placeGiven(CellPoint cellPoint, int i) {
