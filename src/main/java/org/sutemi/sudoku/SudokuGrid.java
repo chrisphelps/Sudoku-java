@@ -95,7 +95,7 @@ public class SudokuGrid {
         if (cell.contains(i)) {
             cell.remove((Integer)i); //cast so that we call remove(object) not remove(index)
             if (cell.size() == 1) {
-                return place(point,i);
+                return place(point,cell.get(0));
             } else {
                 return this;
             }

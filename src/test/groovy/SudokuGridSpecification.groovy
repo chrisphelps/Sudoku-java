@@ -90,4 +90,26 @@ class SudokuGridSpecification extends Specification {
         [0,1,2,3,5,6,7,8].every() { newgrid.getPossibilities(new CellPoint(3,it)).size() == 8 }
     }
 
+    def "remove possibility and propagate"() {
+        given:
+        def point = new CellPoint(3,4)
+        def newgrid = grid
+        for(i in 1..7) {
+            newgrid = newgrid.eliminatePossibility(point,i)
+        }
+
+        when:
+        newgrid = newgrid.eliminatePossibility(point,8) // remove second to last
+
+        then:
+        // original grid unchanged
+        grid.getPossibilities(point).size() == 9
+        [0,1,2,3,4,5,6,7,8].every() { grid.getPossibilities(new CellPoint(it,4)).size() == 9 }
+        [0,1,2,3,4,5,6,7,8].every() { grid.getPossibilities(new CellPoint(3,it)).size() == 9 }
+        // newgrid is updated
+        newgrid.getPossibilities(new CellPoint(3,4)).size() == 1
+        [0,1,2,4,5,6,7,8].every() { newgrid.getPossibilities(new CellPoint(it,4)).size() == 8 }
+        [0,1,2,3,5,6,7,8].every() { newgrid.getPossibilities(new CellPoint(3,it)).size() == 8 }
+    }
+
 }
