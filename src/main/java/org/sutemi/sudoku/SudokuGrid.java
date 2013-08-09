@@ -2,6 +2,8 @@ package org.sutemi.sudoku;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,6 +14,8 @@ import java.util.List;
  */
 public class SudokuGrid {
     List[][] grid;
+
+    Logger logger = LoggerFactory.getLogger("org.sutemi.sudoku.SudokuGrid");
 
     public SudokuGrid() {
         grid = new List[9][9];
@@ -100,6 +104,7 @@ public class SudokuGrid {
     }
 
     private SudokuGrid eliminate(CellPoint point, int i) {
+        logger.debug("Eliminating possibility {} at position ({},{})",i,point.getRow(),point.getCol());
         List<Integer> cell = grid[point.row][point.col];
         if (cell.contains(i)) {
             cell.remove((Integer)i); //cast so that we call remove(object) not remove(index)
@@ -114,6 +119,8 @@ public class SudokuGrid {
     }
 
     private SudokuGrid place(CellPoint cellPoint, int i) {
+        logger.debug("Placing value {} at position ({},{})",i,cellPoint.getRow(),cellPoint.getCol());
+
         List<Integer> cell = grid[cellPoint.getRow()][cellPoint.getCol()];
         if (!cell.contains(i)) {
             return null;

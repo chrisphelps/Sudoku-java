@@ -129,11 +129,7 @@ public class SudokuGridTest {
         }
     }
 
-    // Other tests and next steps
-    // Place conjecture or given return null or exception when cannot be placed
-    // Eliminate possibility places when the alternatives are removed
     // Data structure still pretty ugly
-    // Method to test whether position is a solution
     // What does the external identification of possibilities look like
     // Wrap head around general search implementation
     // Expose Row and Column and Peers as types (List of CellPoints?)
