@@ -144,4 +144,33 @@ public class SudokuGrid {
         return newGrid.place(cellPoint, i);
     }
 
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                List<Integer> cell = grid[row][col];
+                if (cell.size() == 1) {
+                    sb.append(cell.get(0));
+                } else {
+                    sb.append(".");
+                }
+
+                if (col != 8) {
+                    sb.append(" ");
+                }
+                if (col == 2 || col == 5) {
+                    sb.append("| ");
+                }
+            }
+            if (row != 8) {
+                sb.append("\n");
+            }
+            if (row == 2 || row == 5) {
+                sb.append("---------------------\n");
+            }
+        }
+        return sb.toString();
+    }
+
 }

@@ -142,4 +142,44 @@ class SudokuGridSpecification extends Specification {
         expect:
         grid.isSolution() == true
     }
+
+    def "toString for empty grid"() {
+        given:
+        def expectedgrid =
+                ". . . | . . . | . . .\n" +
+                ". . . | . . . | . . .\n" +
+                ". . . | . . . | . . .\n" +
+                "---------------------\n" +
+                ". . . | . . . | . . .\n" +
+                ". . . | . . . | . . .\n" +
+                ". . . | . . . | . . .\n" +
+                "---------------------\n" +
+                ". . . | . . . | . . .\n" +
+                ". . . | . . . | . . .\n" +
+                ". . . | . . . | . . ."
+
+        expect:
+        grid.toString() == expectedgrid
+    }
+
+    def "toString for partially filled grid"() {
+        given:
+        grid.placeGiven(new CellPoint(0,0),1)
+        grid.placeGiven(new CellPoint(3,4),5)
+        def expectedgrid =
+            "1 . . | . . . | . . .\n" +
+            ". . . | . . . | . . .\n" +
+            ". . . | . . . | . . .\n" +
+            "---------------------\n" +
+            ". . . | . 5 . | . . .\n" +
+            ". . . | . . . | . . .\n" +
+            ". . . | . . . | . . .\n" +
+            "---------------------\n" +
+            ". . . | . . . | . . .\n" +
+            ". . . | . . . | . . .\n" +
+            ". . . | . . . | . . ."
+
+        expect:
+        grid.toString() == expectedgrid
+    }
 }
