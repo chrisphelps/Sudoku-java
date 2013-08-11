@@ -182,4 +182,69 @@ class SudokuGridSpecification extends Specification {
         expect:
         grid.toString() == expectedgrid
     }
+
+
+    def "initialize with List<List<Integer>>"() {
+        given:
+            def initgrid = [
+            [1,0,0,2,0,0,3,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,5,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+            ]
+        def expectedgrid =
+            "1 . . | 2 . . | 3 . .\n" +
+            ". . . | . . . | . . .\n" +
+            ". . . | . . . | . . .\n" +
+            "---------------------\n" +
+            ". . . | . 5 . | . . .\n" +
+            ". . . | . . . | . . .\n" +
+            ". . . | . . . | . . .\n" +
+            "---------------------\n" +
+            ". . . | . . . | . . .\n" +
+            ". . . | . . . | . . .\n" +
+            ". . . | . . . | . . ."
+
+        expect:
+         new SudokuGrid(initgrid).toString() == expectedgrid
+    }
+
+    def "initialize with too few rows"() {
+        given:
+        def initgrid = [
+                [1,0,0,2,0,0,3,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0],
+        ]
+        when:
+        new SudokuGrid(initgrid)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "initialize with too few cols"() {
+        given:
+        def initgrid = [
+                [1,0,0,2,0,0,3,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0]
+        ]
+        when:
+        new SudokuGrid(initgrid)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
 }

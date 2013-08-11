@@ -29,6 +29,26 @@ public class SudokuGrid {
         }
     }
 
+    public SudokuGrid(List<List<Integer>> givens) {
+        this();
+        if (givens.size() != 9) {
+            throw new IllegalArgumentException("Insufficient rows");
+        }
+        for(List<Integer> rows: givens) {
+            if (rows.size() != 9) {
+                throw new IllegalArgumentException("Insufficient columns");
+            }
+        }
+        for (int row = 0; row < 9; row++) {
+            List<Integer> rowgivens = givens.get(row);
+            for (int col = 0; col < 9; col++) {
+                if (rowgivens.get(col) != 0) {
+                    placeGiven(new CellPoint(row,col),rowgivens.get(col));
+                }
+            }
+        }
+    }
+
     public SudokuGrid(SudokuGrid that) {
         grid = new List[9][9];
         for (int i = 0; i < 9; i++) {
@@ -128,13 +148,13 @@ public class SudokuGrid {
         cell.clear();
         cell.add(i);
         for (CellPoint point : getRowPoints(cellPoint)) {
-            eliminate(point,i);
+            eliminate(point, i);
         }
         for (CellPoint point : getColPoints(cellPoint)) {
-            eliminate(point,i);
+            eliminate(point, i);
         }
         for (CellPoint point : getPeerPoints(cellPoint)) {
-            eliminate(point,i);
+            eliminate(point, i);
         }
         return this;
     }
