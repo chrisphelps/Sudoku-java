@@ -247,4 +247,30 @@ class SudokuGridSpecification extends Specification {
         then:
         thrown(IllegalArgumentException)
     }
+
+    def "minimum cell of empty grid is (0,0)"() {
+        expect:
+        grid.getMinimumPossibilityCell().getRow() == 0
+        grid.getMinimumPossibilityCell().getCol() == 0
+    }
+
+    def "minimum cell of nonempty grid is minimum"() {
+        given:
+        def initgrid = [
+                [1,0,0,2,0,0,3,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,5],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0]
+        ]
+        def newgrid = new SudokuGrid(initgrid)
+
+        expect:
+        newgrid.getMinimumPossibilityCell().getRow() == 0
+        newgrid.getMinimumPossibilityCell().getCol() == 8
+    }
 }

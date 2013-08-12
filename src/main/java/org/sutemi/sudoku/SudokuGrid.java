@@ -193,4 +193,21 @@ public class SudokuGrid {
         return sb.toString();
     }
 
+    public CellPoint getMinimumPossibilityCell() {
+        int minrow = 0;
+        int mincol = 0;
+        int minpossibilities = 9;
+
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                int possibilities = grid[row][col].size();
+                if (possibilities > 1 && possibilities < minpossibilities) {
+                    minrow = row;
+                    mincol = col;
+                    minpossibilities = possibilities;
+                }
+            }
+        }
+        return new CellPoint(minrow,mincol);
+    }
 }
