@@ -2,6 +2,8 @@ package org.sutemi.sudoku;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +49,28 @@ public class SudokuGrid {
                 }
             }
         }
+    }
+
+    public SudokuGrid(String givens) {
+        this();
+        if (givens == null) {
+            throw new IllegalArgumentException("Null givens");
+        }
+
+        if (givens.length() != 81) {
+            throw new IllegalArgumentException("Too many or too few givens");
+        }
+
+        for (int i = 0; i < 81; i++) {
+            char givenchar = givens.charAt(i);
+            if (Character.isDigit(givenchar)) {
+                int given = Character.digit(givenchar, 10);
+                if (given != 0) {
+                    placeGiven(new CellPoint(i/9,i%9),given);
+                }
+            }
+        }
+
     }
 
     public SudokuGrid(SudokuGrid that) {

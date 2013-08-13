@@ -273,4 +273,68 @@ class SudokuGridSpecification extends Specification {
         newgrid.getMinimumPossibilityCell().getRow() == 0
         newgrid.getMinimumPossibilityCell().getCol() == 8
     }
+
+    def "init with null string"() {
+        when:
+        def newgrid = new SudokuGrid((String)null)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "init with too many givens in string"() {
+        when:
+        def newgrid = new SudokuGrid("4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......9")
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "init with too few givens in string"() {
+        when:
+        def newgrid = new SudokuGrid("4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4....")
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "initialize with string with zeroes"() {
+        given:
+        def initgrid = "100200300000000000000000000000050000000000000000000000000000000000000000000000000"
+        def expectedgrid =
+            "1 . . | 2 . . | 3 . .\n" +
+            ". . . | . . . | . . .\n" +
+            ". . . | . . . | . . .\n" +
+            "---------------------\n" +
+            ". . . | . 5 . | . . .\n" +
+            ". . . | . . . | . . .\n" +
+            ". . . | . . . | . . .\n" +
+            "---------------------\n" +
+            ". . . | . . . | . . .\n" +
+            ". . . | . . . | . . .\n" +
+            ". . . | . . . | . . ."
+
+        expect:
+        new SudokuGrid(initgrid).toString() == expectedgrid
+    }
+
+    def "initialize with string with dots"() {
+        given:
+        def initgrid = "1..2..3........................5................................................."
+        def expectedgrid =
+            "1 . . | 2 . . | 3 . .\n" +
+                    ". . . | . . . | . . .\n" +
+                    ". . . | . . . | . . .\n" +
+                    "---------------------\n" +
+                    ". . . | . 5 . | . . .\n" +
+                    ". . . | . . . | . . .\n" +
+                    ". . . | . . . | . . .\n" +
+                    "---------------------\n" +
+                    ". . . | . . . | . . .\n" +
+                    ". . . | . . . | . . .\n" +
+                    ". . . | . . . | . . ."
+
+        expect:
+        new SudokuGrid(initgrid).toString() == expectedgrid
+    }
 }
