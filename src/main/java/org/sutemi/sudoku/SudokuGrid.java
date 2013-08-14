@@ -151,9 +151,15 @@ public class SudokuGrid {
         logger.debug("Eliminating possibility {} at position ({},{})",i,point.getRow(),point.getCol());
         List<Integer> cell = grid[point.row][point.col];
         if (cell.contains(i)) {
+            if (cell.size() == 1) {
+                return this;
+            }
             cell.remove((Integer)i); //cast so that we call remove(object) not remove(index)
+            //logger.debug("Possibilities left: {}", cell.size());
             if (cell.size() == 1) {
                 return place(point,cell.get(0));
+            } else if (cell.size() == 0) {
+                throw new IllegalStateException("Removed all possibilities");
             } else {
                 return this;
             }
@@ -172,18 +178,19 @@ public class SudokuGrid {
         cell.clear();
         cell.add(i);
         for (CellPoint point : getRowPoints(cellPoint)) {
-            eliminate(point, i);
+            SudokuGrid modified = eliminate(point, i);
         }
         for (CellPoint point : getColPoints(cellPoint)) {
-            eliminate(point, i);
+            SudokuGrid modified = eliminate(point, i);
         }
         for (CellPoint point : getPeerPoints(cellPoint)) {
-            eliminate(point, i);
+            SudokuGrid modified = eliminate(point, i);
         }
         return this;
     }
 
     public SudokuGrid placeConjecture(CellPoint cellPoint, int i) {
+        logger.debug("Placing conjecture {} at position ({},{})",i,cellPoint.getRow(),cellPoint.getCol());
         SudokuGrid newGrid = new SudokuGrid(this);
         return newGrid.place(cellPoint, i);
     }
@@ -231,6 +238,10 @@ public class SudokuGrid {
                     minpossibilities = possibilities;
                 }
             }
+        }
+
+        if (grid[minrow][mincol].size() == 1) {
+            return null; // bug
         }
         return new CellPoint(minrow,mincol);
     }

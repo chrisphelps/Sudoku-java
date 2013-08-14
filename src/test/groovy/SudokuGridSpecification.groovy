@@ -274,6 +274,15 @@ class SudokuGridSpecification extends Specification {
         newgrid.getMinimumPossibilityCell().getCol() == 8
     }
 
+    def "minimum cell of full grid is null"() {
+        given:
+        def initgrid = "147258369258369147369147258471825936582936714693714825714582693825693471936471582"
+        def newgrid = new SudokuGrid(initgrid)
+
+        expect:
+        newgrid.getMinimumPossibilityCell() == null
+    }
+
     def "init with null string"() {
         when:
         def newgrid = new SudokuGrid((String)null)
