@@ -152,14 +152,12 @@ public class SudokuGrid {
         List<Integer> cell = grid[point.row][point.col];
         if (cell.contains(i)) {
             if (cell.size() == 1) {
-                return this;
+                // trying to remove the only possibility is a contradiction so return null
+                return null;
             }
             cell.remove((Integer)i); //cast so that we call remove(object) not remove(index)
-            //logger.debug("Possibilities left: {}", cell.size());
             if (cell.size() == 1) {
                 return place(point,cell.get(0));
-            } else if (cell.size() == 0) {
-                throw new IllegalStateException("Removed all possibilities");
             } else {
                 return this;
             }
@@ -179,12 +177,15 @@ public class SudokuGrid {
         cell.add(i);
         for (CellPoint point : getRowPoints(cellPoint)) {
             SudokuGrid modified = eliminate(point, i);
+            if (modified == null) return null;
         }
         for (CellPoint point : getColPoints(cellPoint)) {
             SudokuGrid modified = eliminate(point, i);
+            if (modified == null) return null;
         }
         for (CellPoint point : getPeerPoints(cellPoint)) {
             SudokuGrid modified = eliminate(point, i);
+            if (modified == null) return null;
         }
         return this;
     }

@@ -120,6 +120,19 @@ class SudokuGridSpecification extends Specification {
         newgrid.placeConjecture(new CellPoint(5,4),5) == null
     }
 
+    def "place conjecture fails when conjecture constraint propagation leads to conflict"() {
+        given:
+        def newgrid = new SudokuGrid(grid)
+        [1,3,4,5,6,7,9].each {
+            newgrid = newgrid.eliminatePossibility(new CellPoint(0,2),it)
+            newgrid = newgrid.eliminatePossibility(new CellPoint(0,3),it)
+            newgrid = newgrid.eliminatePossibility(new CellPoint(0,4),it)
+        }
+
+        expect:
+        newgrid.placeConjecture(new CellPoint(0,2),2) == null
+    }
+
     def "new grid is not a solution"() {
         expect:
         grid.isSolution() == false
