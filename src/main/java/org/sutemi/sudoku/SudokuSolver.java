@@ -20,9 +20,7 @@ public class SudokuSolver {
         CellPoint point = puzzle.getMinimumPossibilityCell();
         for (int poss : puzzle.getPossibilities(point)) {
             SudokuGrid solution = solve(puzzle.placeConjecture(point, poss));
-            if (solution == null) {
-                return null;
-            } else if (solution.isSolution()) {
+            if (solution != null && solution.isSolution()) {
                 return solution;
             }
         }
